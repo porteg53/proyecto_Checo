@@ -1,0 +1,231 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "tporteg",
+    "description" : "esta API permite obtener información de los empleados",
+    "termsOfService" : "http://localhost/api/",
+    "contact" : {
+      "name" : "PacoOrtega",
+      "email" : "ortegapaco30@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/porteg/porteg/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "www.google.com/api",
+    "description" : "google server"
+  }, {
+    "url" : "www. facebook.com/api",
+    "description" : "facebook server"
+  } ],
+  "tags" : [ {
+    "name" : "ISC GET",
+    "description" : "Swagger funcion get"
+  }, {
+    "name" : "ISC POST",
+    "description" : "Swagger funcion post"
+  } ],
+  "paths" : {
+    "/employees" : {
+      "get" : {
+        "tags" : [ "ISC GET" ],
+        "description" : "permite obneter lista de empleados según los parametros.",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "description" : "codigo del empleado",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 465
+          }
+        }, {
+          "name" : "sueldo",
+          "in" : "query",
+          "description" : "sueldos del empleado",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 20000
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/inline_response_200"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Request not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "{\"message\":\"error 404. pagina no encontrada.\"}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "ISC POST" ],
+        "description" : "Crear usuarios en la base de Datos",
+        "parameters" : [ {
+          "name" : "employee",
+          "in" : "query",
+          "description" : "crear un nuevo empleado en la base de datos",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/employee"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successfull request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "ok"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : "ok"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employess/{id}" : {
+      "get" : {
+        "tags" : [ "ISC GET" ],
+        "description" : "obtener información de un empleado utilizando su ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "codigo de empleado",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "number",
+            "example" : 465
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request exito",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/inline_response_200"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employess/{id2}" : {
+      "delete" : {
+        "description" : "Eliminar información de un empleado utilizando su ID",
+        "parameters" : [ {
+          "name" : "id2",
+          "in" : "path",
+          "description" : "codigo de empleado",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "number",
+            "example" : 465
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful request exito",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/inline_response_200"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "inline_response_200" : {
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 465
+          },
+          "nombre" : {
+            "type" : "string",
+            "example" : "Paco Ortega"
+          },
+          "sueldo" : {
+            "type" : "number",
+            "format" : "float",
+            "example" : 20000
+          }
+        }
+      },
+      "employee" : {
+        "type" : "object",
+        "properties" : {
+          "nombre" : {
+            "type" : "string",
+            "description" : "Primer nombre",
+            "example" : "Paco"
+          },
+          "id" : {
+            "type" : "number",
+            "description" : "ID del empleado",
+            "example" : 465
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "correo elctronico del empleado",
+            "example" : "ortegapaco30@gmail.com"
+          }
+        }
+      }
+    }
+  }
+}
